@@ -17,7 +17,7 @@
 namespace enrol_conditional;
 
 use core_external\external_api;
-use enrol_conditional_external;
+use enrol_conditional\external\enrol_user;
 use enrol_conditional_plugin;
 use local_enrolconditions\condition\manager;
 
@@ -25,7 +25,6 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 require_once($CFG->dirroot . '/enrol/conditional/lib.php');
-require_once($CFG->dirroot . '/enrol/conditional/externallib.php');
 require_once($CFG->dirroot . '/local/enrolconditions/tests/fixtures/fake_condition.php');
 
 /**
@@ -38,7 +37,7 @@ require_once($CFG->dirroot . '/local/enrolconditions/tests/fixtures/fake_conditi
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 #[\PHPUnit\Framework\Attributes\CoversClass(enrol_conditional_plugin::class)]
-#[\PHPUnit\Framework\Attributes\CoversClass(enrol_conditional_external::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(enrol_user::class)]
 final class enrol_check_test extends \core_external\tests\externallib_testcase {
     /** @var enrol_conditional_plugin */
     protected enrol_conditional_plugin $plugin;
@@ -177,8 +176,8 @@ final class enrol_check_test extends \core_external\tests\externallib_testcase {
         $instance = $this->create_instance($this->allowed_tree());
         $this->setUser($this->refused);
 
-        $result = enrol_conditional_external::enrol_user($this->course->id, '', $instance->id);
-        $result = external_api::clean_returnvalue(enrol_conditional_external::enrol_user_returns(), $result);
+        $result = enrol_user::execute($this->course->id, '', $instance->id);
+        $result = external_api::clean_returnvalue(enrol_user::execute_returns(), $result);
 
         $this->assertFalse($result['status']);
         $this->assertCount(1, $result['warnings']);
@@ -191,8 +190,8 @@ final class enrol_check_test extends \core_external\tests\externallib_testcase {
         $instance = $this->create_instance($this->allowed_tree());
         $this->setUser($this->allowed);
 
-        $result = enrol_conditional_external::enrol_user($this->course->id, '', $instance->id);
-        $result = external_api::clean_returnvalue(enrol_conditional_external::enrol_user_returns(), $result);
+        $result = enrol_user::execute($this->course->id, '', $instance->id);
+        $result = external_api::clean_returnvalue(enrol_user::execute_returns(), $result);
 
         $this->assertTrue($result['status']);
         $this->assertTrue(is_enrolled(\context_course::instance($this->course->id), $this->allowed));

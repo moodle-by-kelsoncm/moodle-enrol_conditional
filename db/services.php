@@ -27,18 +27,14 @@ defined('MOODLE_INTERNAL') || die();
 
 $functions = [
     'enrol_conditional_get_instance_info' => [
-        'classname'   => 'enrol_conditional_external',
-        'methodname'  => 'get_instance_info',
-        'classpath'   => 'enrol/conditional/externallib.php',
+        'classname'   => 'enrol_conditional\external\get_instance_info',
         'description' => 'self enrolment instance information.',
         'type'        => 'read',
         'services'    => [MOODLE_OFFICIAL_MOBILE_SERVICE],
     ],
 
     'enrol_conditional_enrol_user' => [
-        'classname'   => 'enrol_conditional_external',
-        'methodname'  => 'enrol_user',
-        'classpath'   => 'enrol/conditional/externallib.php',
+        'classname'   => 'enrol_conditional\external\enrol_user',
         'description' => 'Self enrol the current user in the given course.',
         'type'        => 'write',
         'services'    => [MOODLE_OFFICIAL_MOBILE_SERVICE],
