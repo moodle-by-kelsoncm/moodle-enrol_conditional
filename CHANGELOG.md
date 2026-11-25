@@ -2,6 +2,14 @@
 
 All notable changes to the Conditional self enrolment plugin will be documented in this file.
 
+## 1.1.2 - 2026-11-25
+
+### Changed
+- The web service functions `enrol_conditional_get_instance_info` and `enrol_conditional_enrol_user` moved from the legacy `externallib.php` to the classes `\enrol_conditional\external\get_instance_info` and `\enrol_conditional\external\enrol_user` (finding of the Marketplace review, issue #19). The function names, parameters and results do not change, so the Moodle App and other clients keep working. Code that called the class `enrol_conditional_external` directly must use the new classes.
+
+### Fixed
+- `enrol_conditional_get_instance_info` no longer keeps the internal `requiredparam` entry in its result.
+
 ## 1.1.1 - 2026-11-19
 
 ### Changed
